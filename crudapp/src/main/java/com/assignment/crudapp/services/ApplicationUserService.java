@@ -7,6 +7,8 @@ import java.util.List;
 public interface ApplicationUserService {
 
     Long createUser(ApplicationUser newUser);
-    ApplicationUser getUserById();
+    ApplicationUser getUserById(Long id);
     List<ApplicationUser> getAllUsers();
+    void updateUser(Long id, ApplicationUser updatedUserInfo);
+    void deleteUser(Long id);
 }
