@@ -17,7 +17,6 @@ public class ApplicationUser {
     private Long id;
     private String name;
     private String email;
-
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthDate;
 }

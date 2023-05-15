@@ -2,6 +2,7 @@ package com.assignment.crudapp.controllers;
 
 import com.assignment.crudapp.models.ApplicationUser;
 import com.assignment.crudapp.services.impl.ApplicationUserServiceImpl;
+import com.assignment.crudapp.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("users")
 public class UsersController {
-
     @Autowired
     ApplicationUserServiceImpl appUserService;
 
@@ -22,7 +22,7 @@ public class UsersController {
         return ResponseEntity.ok(allUsers);
     }
 
-    @GetMapping("{id}")
+    @GetMapping(Constants.USER_ID_PATH_VARIABLE)
     public ResponseEntity<ApplicationUser> getUserById(@PathVariable  Long id) {
         ApplicationUser user = appUserService.getUserById(id);
         return ResponseEntity.ok(user);

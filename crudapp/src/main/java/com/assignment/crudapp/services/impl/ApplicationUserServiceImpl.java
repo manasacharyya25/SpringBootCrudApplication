@@ -3,6 +3,7 @@ package com.assignment.crudapp.services.impl;
 import com.assignment.crudapp.models.ApplicationUser;
 import com.assignment.crudapp.repositories.ApplicationUserRepository;
 import com.assignment.crudapp.services.ApplicationUserService;
+import com.assignment.crudapp.utils.Constants;
 import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
         Optional<ApplicationUser> userById = appUserRepo.findById(id);
 
         if(userById.isEmpty()) {
-            throw new RuntimeException("User Not Found for id : " + id);
+            throw new RuntimeException(String.format(Constants.USER_NOT_FOUND_ERROR_MSG, id));
         }
 
         return userById.get();
