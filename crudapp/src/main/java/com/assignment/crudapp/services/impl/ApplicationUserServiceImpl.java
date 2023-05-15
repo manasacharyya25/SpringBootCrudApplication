@@ -1,10 +1,12 @@
 package com.assignment.crudapp.services.impl;
 
+import com.assignment.crudapp.dtos.UserDTO;
 import com.assignment.crudapp.models.ApplicationUser;
 import com.assignment.crudapp.repositories.ApplicationUserRepository;
 import com.assignment.crudapp.services.ApplicationUserService;
 import com.assignment.crudapp.utils.Constants;
 import org.apache.catalina.mapper.Mapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +19,12 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     @Autowired
     ApplicationUserRepository appUserRepo;
 
+    @Autowired
+    ModelMapper modelMapper;
+
     @Override
-    public Long createUser(ApplicationUser newUser) {
-        ApplicationUser savedUser = appUserRepo.save(newUser);
+    public Long createUser(UserDTO newUser) {
+        ApplicationUser savedUser = appUserRepo.save(modelMapper.map(newUser, ApplicationUser.class));
         return savedUser.getId();
     }
 
@@ -51,6 +56,12 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     public void deleteUser(Long id) {
         ApplicationUser existingUser = getUserById(id);
         appUserRepo.delete(existingUser);
+    }
+
+    @Override
+    public boolean isUniqueEmail(String email) {
+        Optional<ApplicationUser> userByEmail = appUserRepo.findByEmail(email);
+        return userByEmail.isEmpty();
     }
 
     private void updateUserInfo(ApplicationUser existingUser, ApplicationUser updatedUserInfo) {

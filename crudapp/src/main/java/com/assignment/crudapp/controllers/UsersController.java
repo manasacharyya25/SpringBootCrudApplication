@@ -1,8 +1,10 @@
 package com.assignment.crudapp.controllers;
 
+import com.assignment.crudapp.dtos.UserDTO;
 import com.assignment.crudapp.models.ApplicationUser;
 import com.assignment.crudapp.services.impl.ApplicationUserServiceImpl;
 import com.assignment.crudapp.utils.Constants;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +31,7 @@ public class UsersController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> createUser(@RequestBody ApplicationUser newUser) {
+    public ResponseEntity<Long> createUser(@Valid @RequestBody UserDTO newUser) {
         Long newUserId = appUserService.createUser(newUser);
         return ResponseEntity.ok(newUserId);
     }
