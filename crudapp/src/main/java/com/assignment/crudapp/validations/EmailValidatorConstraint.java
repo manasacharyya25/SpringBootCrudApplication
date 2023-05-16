@@ -1,4 +1,4 @@
-package com.assignment.crudapp.utils;
+package com.assignment.crudapp.validations;
 
 
 import jakarta.validation.ConstraintValidator;

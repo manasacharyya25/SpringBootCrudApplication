@@ -1,11 +1,8 @@
 package com.assignment.crudapp.dtos;
 
-import com.assignment.crudapp.utils.EmailValidatorAnnotation;
-import com.assignment.crudapp.utils.UniqueEmailValidatorAnnotation;
+import com.assignment.crudapp.validations.EmailValidatorAnnotation;
+import com.assignment.crudapp.validations.UniqueEmailValidatorAnnotation;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 

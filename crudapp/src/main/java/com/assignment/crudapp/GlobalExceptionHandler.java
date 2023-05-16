@@ -1,4 +1,4 @@
-package com.assignment.crudapp.exceptions;
+package com.assignment.crudapp;
 
 import com.assignment.crudapp.utils.Constants;
 import org.springframework.http.HttpStatus;
