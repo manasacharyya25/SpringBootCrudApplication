@@ -1,6 +1,7 @@
 package com.assignment.crudapp.services.impl;
 
 import com.assignment.crudapp.dtos.UserDTO;
+import com.assignment.crudapp.exceptions.RecordNotFoundException;
 import com.assignment.crudapp.models.ApplicationUser;
 import com.assignment.crudapp.repositories.ApplicationUserRepository;
 import com.assignment.crudapp.services.ApplicationUserService;
@@ -31,12 +32,12 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     }
 
     @Override
-    public UserDTO getUserById(Long id) {
+    public UserDTO getUserById(Long id) throws RecordNotFoundException {
         Optional<ApplicationUser> userById = appUserRepo.findById(id);
 
 
         if(userById.isEmpty()) {
-            throw new RuntimeException(String.format(Constants.USER_NOT_FOUND_ERROR_MSG, id));
+            throw new RecordNotFoundException(String.format(Constants.USER_NOT_FOUND_ERROR_MSG, id));
         }
 
         return modelMapper.map(userById.get(), UserDTO.class);
@@ -51,7 +52,7 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     }
 
     @Override
-    public void updateUser(Long id, UserDTO updatedUserInfo) {
+    public void updateUser(Long id, UserDTO updatedUserInfo) throws RecordNotFoundException {
         UserDTO existingUser = getUserById(id);
         updateUserInfo(existingUser, updatedUserInfo);
 
@@ -59,7 +60,7 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public void deleteUser(Long id) throws RecordNotFoundException {
         UserDTO existingUser = getUserById(id);
         appUserRepo.delete(modelMapper.map(existingUser, ApplicationUser.class));
     }

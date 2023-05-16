@@ -11,7 +11,6 @@ import java.util.Date;
 @Data
 public class UserDTO {
     private Long id;
-    @NotNull(message = "Name cannot be Null")
     private String name;
     @EmailValidatorAnnotation
     @UniqueEmailValidatorAnnotation

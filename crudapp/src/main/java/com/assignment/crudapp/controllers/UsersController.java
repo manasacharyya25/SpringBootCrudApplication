@@ -1,6 +1,7 @@
 package com.assignment.crudapp.controllers;
 
 import com.assignment.crudapp.dtos.UserDTO;
+import com.assignment.crudapp.exceptions.RecordNotFoundException;
 import com.assignment.crudapp.services.impl.ApplicationUserServiceImpl;
 import com.assignment.crudapp.utils.Constants;
 import jakarta.validation.Valid;
@@ -25,7 +26,7 @@ public class UsersController {
     }
 
     @GetMapping(Constants.USER_ID_PATH_VARIABLE)
-    public ResponseEntity<UserDTO> getUserById(@PathVariable  Long id) {
+    public ResponseEntity<UserDTO> getUserById(@PathVariable  Long id) throws RecordNotFoundException {
         UserDTO user = appUserService.getUserById(id);
         return ResponseEntity.ok(user);
     }
@@ -37,13 +38,13 @@ public class UsersController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody @Valid UserDTO updatedUserInfo) {
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody @Valid UserDTO updatedUserInfo) throws RecordNotFoundException {
         appUserService.updateUser(id, updatedUserInfo);
         return ResponseEntity.ok("User Updated.");
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) throws RecordNotFoundException {
         appUserService.deleteUser(id);
         return ResponseEntity.ok("User Deleted.");
     }

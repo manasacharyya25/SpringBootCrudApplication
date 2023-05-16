@@ -19,9 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-        classes = CrudApplication.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = CrudApplication.class)
 @AutoConfigureMockMvc
 public class UsersControllerUnitTest {
     @Autowired
@@ -59,7 +57,7 @@ public class UsersControllerUnitTest {
         mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"name\": \"Manas Acharyya\",\"email\": \"manas.acharyya@gmail.com\"}"))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
 
         verify(userService, times(1)).isUniqueEmail("manas.acharyya@gmail.com");
         verify(userService, times(1)).createUser(eq(user));

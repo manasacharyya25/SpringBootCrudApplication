@@ -1,5 +1,7 @@
 package com.assignment.crudapp;
 
+import com.assignment.crudapp.dtos.ErrorResponseDTO;
+import com.assignment.crudapp.exceptions.RecordNotFoundException;
 import com.assignment.crudapp.utils.Constants;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,12 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 @RestController
 public class GlobalExceptionHandler {
+    @ExceptionHandler(RecordNotFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> handleRecordNotFoundException(RecordNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponseDTO(ex.getMessage()));
+    }
+
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<String> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -23,18 +31,18 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
-        List<String> errorMessages = ex.getBindingResult().getFieldErrors().stream()
-                .map(error -> error.getDefaultMessage())
+    public ResponseEntity<List<ErrorResponseDTO>> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
+        List<ErrorResponseDTO> errorMessages = ex.getBindingResult().getFieldErrors().stream()
+                .map(error -> new ErrorResponseDTO(error.getDefaultMessage()))
                 .collect(Collectors.toList());
 
         return new ResponseEntity<>(errorMessages, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception ex) {
+    public ResponseEntity<ErrorResponseDTO> handleException(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ex.getMessage());
+                .body(new ErrorResponseDTO(ex.getMessage()));
     }
 
 
