@@ -5,11 +5,13 @@ import com.assignment.crudapp.models.ApplicationUser;
 import com.assignment.crudapp.repositories.ApplicationUserRepository;
 import com.assignment.crudapp.services.ApplicationUserService;
 import com.assignment.crudapp.utils.Constants;
+import org.apache.catalina.User;
 import org.apache.catalina.mapper.Mapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -29,33 +31,37 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     }
 
     @Override
-    public ApplicationUser getUserById(Long id) {
+    public UserDTO getUserById(Long id) {
         Optional<ApplicationUser> userById = appUserRepo.findById(id);
+
 
         if(userById.isEmpty()) {
             throw new RuntimeException(String.format(Constants.USER_NOT_FOUND_ERROR_MSG, id));
         }
 
-        return userById.get();
+        return modelMapper.map(userById.get(), UserDTO.class);
     }
 
     @Override
-    public List<ApplicationUser> getAllUsers() {
+    public List<UserDTO> getAllUsers() {
+        List<UserDTO> response = new ArrayList<>();
         List<ApplicationUser> allUsers = appUserRepo.findAll();
-        return allUsers;
+        allUsers.forEach(appUser -> response.add(modelMapper.map(appUser, UserDTO.class)));
+        return response;
     }
 
     @Override
-    public void updateUser(Long id, ApplicationUser updatedUserInfo) {
-        ApplicationUser existingUser = getUserById(id);
+    public void updateUser(Long id, UserDTO updatedUserInfo) {
+        UserDTO existingUser = getUserById(id);
         updateUserInfo(existingUser, updatedUserInfo);
-        appUserRepo.save(existingUser);
+
+        appUserRepo.save(modelMapper.map(existingUser, ApplicationUser.class));
     }
 
     @Override
     public void deleteUser(Long id) {
-        ApplicationUser existingUser = getUserById(id);
-        appUserRepo.delete(existingUser);
+        UserDTO existingUser = getUserById(id);
+        appUserRepo.delete(modelMapper.map(existingUser, ApplicationUser.class));
     }
 
     @Override
@@ -64,7 +70,7 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
         return userByEmail.isEmpty();
     }
 
-    private void updateUserInfo(ApplicationUser existingUser, ApplicationUser updatedUserInfo) {
+    private void updateUserInfo(UserDTO existingUser, UserDTO updatedUserInfo) {
         existingUser.setName(updatedUserInfo.getName() != null ? updatedUserInfo.getName() : existingUser.getName());
         existingUser.setEmail(updatedUserInfo.getEmail() != null ? updatedUserInfo.getEmail() : existingUser.getEmail());
         existingUser.setBirthDate(updatedUserInfo.getBirthDate() != null ? updatedUserInfo.getBirthDate() : existingUser.getBirthDate());

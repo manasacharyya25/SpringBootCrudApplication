@@ -5,6 +5,7 @@ import com.assignment.crudapp.models.ApplicationUser;
 import com.assignment.crudapp.services.impl.ApplicationUserServiceImpl;
 import com.assignment.crudapp.utils.Constants;
 import jakarta.validation.Valid;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,14 +20,14 @@ public class UsersController {
     ApplicationUserServiceImpl appUserService;
 
     @GetMapping()
-    public ResponseEntity<List<ApplicationUser>> getAllUsers() {
-        List<ApplicationUser> allUsers = appUserService.getAllUsers();
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> allUsers = appUserService.getAllUsers();
         return ResponseEntity.ok(allUsers);
     }
 
     @GetMapping(Constants.USER_ID_PATH_VARIABLE)
-    public ResponseEntity<ApplicationUser> getUserById(@PathVariable  Long id) {
-        ApplicationUser user = appUserService.getUserById(id);
+    public ResponseEntity<UserDTO> getUserById(@PathVariable  Long id) {
+        UserDTO user = appUserService.getUserById(id);
         return ResponseEntity.ok(user);
     }
 
@@ -37,7 +38,7 @@ public class UsersController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody ApplicationUser updatedUserInfo) {
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody @Valid UserDTO updatedUserInfo) {
         appUserService.updateUser(id, updatedUserInfo);
         return ResponseEntity.ok("User Updated.");
     }

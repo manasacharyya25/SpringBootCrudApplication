@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface ApplicationUserService {
     Long createUser(UserDTO newUser);
-    ApplicationUser getUserById(Long id);
-    List<ApplicationUser> getAllUsers();
-    void updateUser(Long id, ApplicationUser updatedUserInfo);
+    UserDTO getUserById(Long id);
+    List<UserDTO> getAllUsers();
+    void updateUser(Long id, UserDTO updatedUserInfo);
     void deleteUser(Long id);
     boolean isUniqueEmail(String email);
 }
