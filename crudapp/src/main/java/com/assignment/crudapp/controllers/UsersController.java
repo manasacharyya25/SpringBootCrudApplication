@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.Date;
 import java.util.List;
 
@@ -30,9 +31,9 @@ public class UsersController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> createUser(@Valid @RequestBody UserDTO newUser) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserDTO newUser) {
         Long newUserId = appUserService.createUser(newUser);
-        return ResponseEntity.ok(newUserId);
+        return ResponseEntity.created(URI.create("/users/" + newUserId)).build();
     }
 
     @PutMapping("{id}")

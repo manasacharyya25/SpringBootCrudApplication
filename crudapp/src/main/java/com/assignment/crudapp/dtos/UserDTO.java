@@ -13,7 +13,6 @@ public class UserDTO {
     private Long id;
     @NotNull(message = "Name cannot be Null")
     private String name;
-    @NotNull(message = "Email cannot be Null")
     @EmailValidatorAnnotation
     @UniqueEmailValidatorAnnotation
     private String email;
