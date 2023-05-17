@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: pg_container
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: crud_app_db
+    ports:
+      - "5432:5432"
+    networks:
+      - crud-app-network
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
+  backendserver:
+    build: .
+    container_name: app
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/crud_app_db
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - crud-app-network
+networks:
+  crud-app-network:
+    driver: bridge
