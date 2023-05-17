@@ -6,14 +6,11 @@ import com.assignment.crudapp.models.ApplicationUser;
 import com.assignment.crudapp.repositories.ApplicationUserRepository;
 import com.assignment.crudapp.services.ApplicationUserService;
 import com.assignment.crudapp.utils.Constants;
-import org.apache.catalina.User;
-import org.apache.catalina.mapper.Mapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 

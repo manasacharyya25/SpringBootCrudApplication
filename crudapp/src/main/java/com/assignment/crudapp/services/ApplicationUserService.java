@@ -2,7 +2,6 @@ package com.assignment.crudapp.services;
 
 import com.assignment.crudapp.dtos.UserDTO;
 import com.assignment.crudapp.exceptions.RecordNotFoundException;
-import com.assignment.crudapp.models.ApplicationUser;
 
 import java.util.List;
 
