@@ -23,7 +23,7 @@ services:
     ports:
       - "5050:80"
   backendserver:
-    build: .
+    image: dockeruser251195/springboot_crud_app:v1
     container_name: app
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/crud_app_db
