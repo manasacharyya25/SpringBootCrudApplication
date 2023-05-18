@@ -18,18 +18,24 @@ To run the application locally, make sure you have the following prerequisites i
 Follow these steps to run the application:
 
 - Clone the repository to your local machine:
-
+    ```
     git clone https://github.com/manasacharyya25/SpringBootCrudApplication.git
-
+    ```
 - Navigate to the project directory:
+    ```
     cd crudapp
+    ```
 
 - Start the application using Docker Compose. This command will start the application along with its required dependencies (such as a PostgreSQL database).
+    ```
     docker-compose up -d
+    ```
 
 - Once the application is up and running, you can access the Swagger documentation UI by opening the following URL in your web browser:
 
+    ```
     http://localhost:8080/swagger-ui/index.html#
+    ```
 
 This UI provides an overview of all the available endpoints and allows you to execute requests and view responses.
 
